@@ -1,6 +1,4 @@
 #include "MainObject.h"
- 
-#include "MainObject.h"
 
 MainObject MainObject_Create() {
 
@@ -131,6 +129,9 @@ void MainObject_HandleInputAction(MainObject* obj, SDL_Event events, SDL_Rendere
 		case SDLK_2:
 			//present_bullet_ = BulletObject::LASER_BULLET;
 			break;
+		case SDLK_w:
+			obj->input_type_.jump_ = 1;
+			break;
 		default:
 			break;
 		}
@@ -144,32 +145,35 @@ void MainObject_HandleInputAction(MainObject* obj, SDL_Event events, SDL_Rendere
 		case SDLK_a:
 			obj->input_type_.left_ = 0;
 			break;
+		case SDLK_w:
+			obj->input_type_.jump_ = 0;
+			break;
 		default:
 			break;
 		}
 	}
-	if (events.type == SDL_MOUSEBUTTONDOWN) {
-		if (events.button.button == SDL_BUTTON_RIGHT) {
-			obj->input_type_.jump_ = 1;
-		}
-		//else if (events.button.button == SDL_BUTTON_LEFT) {
-		//	BulletObject* p_bullet = new BulletObject();
-		//	p_bullet->set_bulet_type(present_bullet_);
-		//	p_bullet->LoadImgBullet(screen);
-		//	if (status_ == WALK_LEFT) {
-		//		p_bullet->set_bullet_dir(BulletObject::DIR_LEFT);
-		//		p_bullet->SetRect(this->rect_.x, this->rect_.y + height_frame_ * 0.25);
-		//	}
-		//	else if (status_ == WALK_RIGHT) {
-		//		p_bullet->set_bullet_dir(BulletObject::DIR_RIGHT);
-		//		p_bullet->SetRect(this->rect_.x + width_frame_ - 20, this->rect_.y + height_frame_ * 0.3);
-		//	}
-		//	p_bullet->set_x_val(20);
-		//	p_bullet->set_y_val(20);
-		//	p_bullet->set_is_move(true);
-		//	p_bullet_list_.push_back(p_bullet);
-		//}
-	}
+	//if (events.type == SDL_KEYDOWN) {
+	//	if (events.) {
+	//		obj->input_type_.jump_ = 1;
+	//	}
+	//	//else if (events.button.button == SDL_BUTTON_LEFT) {
+	//	//	BulletObject* p_bullet = new BulletObject();
+	//	//	p_bullet->set_bulet_type(present_bullet_);
+	//	//	p_bullet->LoadImgBullet(screen);
+	//	//	if (status_ == WALK_LEFT) {
+	//	//		p_bullet->set_bullet_dir(BulletObject::DIR_LEFT);
+	//	//		p_bullet->SetRect(this->rect_.x, this->rect_.y + height_frame_ * 0.25);
+	//	//	}
+	//	//	else if (status_ == WALK_RIGHT) {
+	//	//		p_bullet->set_bullet_dir(BulletObject::DIR_RIGHT);
+	//	//		p_bullet->SetRect(this->rect_.x + width_frame_ - 20, this->rect_.y + height_frame_ * 0.3);
+	//	//	}
+	//	//	p_bullet->set_x_val(20);
+	//	//	p_bullet->set_y_val(20);
+	//	//	p_bullet->set_is_move(true);
+	//	//	p_bullet_list_.push_back(p_bullet);
+	//	//}
+	//}
 }
 
 //void MainObject_HandldeBulle(MainObject* obj, SDL_Renderer* des) {

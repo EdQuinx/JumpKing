@@ -1,8 +1,9 @@
-#include "CommonFunction.h"
+﻿#include "CommonFunction.h"
 #include "BaseObject.h"
 #include "game_map.h"
 #include "MainObject.h"
 #include "ImpTimer.h"
+#include "Camera.h"
 
 bool InitData()
 {
