@@ -1,10 +1,10 @@
-#include "game_map.h"
+#include "GameMap.h"
 
 GameMap GameMap_Create()
 {
     GameMap obj;
     for (int i = 0; i < MAX_TILES; i++) {
-        obj.tile_mat[i].base_object = BaseObject_Create();
+        obj.tileMat[i].baseObject = BaseObject_Create();
     }
     obj.LoadMap = GameMap_LoadMap;
     obj.LoadTiles = GameMap_LoadTiles;
@@ -18,9 +18,9 @@ GameMap GameMap_Create()
 void GameMap_Destroy(GameMap* obj)
 {
     if (obj) {
-        if (obj->tile_mat) {
+        if (obj->tileMat) {
             for (int i = 0; i < MAX_TILES; i++) {
-                obj->tile_mat[i].base_object.Destroy(&obj->tile_mat[i].base_object);
+                obj->tileMat[i].baseObject.Destroy(&obj->tileMat[i].baseObject);
 
             }
         }
@@ -28,8 +28,8 @@ void GameMap_Destroy(GameMap* obj)
     }
 }
 
-Map GameMap_GetMap(GameMap* obj) { return obj->game_map_; }
-void GameMap_SetMap(GameMap* obj, const Map* gMap) { obj->game_map_ = *gMap; }
+Map GameMap_GetMap(GameMap* obj) { return obj->gameMap; }
+void GameMap_SetMap(GameMap* obj, const Map* gMap) { obj->gameMap = *gMap; }
 
 void GameMap_LoadMap(GameMap* obj, char* name) {
     FILE* fp = NULL;
@@ -38,29 +38,29 @@ void GameMap_LoadMap(GameMap* obj, char* name) {
         return;
     }
 
-    obj->game_map_.max_x_ = 0;
-    obj->game_map_.max_y_ = 0;
+    obj->gameMap.maxX = 0;
+    obj->gameMap.maxY = 0;
     for (int i = 0; i < MAX_MAP_Y; i++) {
         for (int j = 0; j < MAX_MAP_X; j++) {
-            fscanf_s(fp, "%d", &obj->game_map_.tile[i][j]);
-            int val = obj->game_map_.tile[i][j];
+            fscanf_s(fp, "%d", &obj->gameMap.tile[i][j]);
+            int val = obj->gameMap.tile[i][j];
             if (val > 0) {
-                if (j > obj->game_map_.max_x_) {
-                    obj->game_map_.max_x_ = j;
+                if (j > obj->gameMap.maxX) {
+                    obj->gameMap.maxX = j;
                 }
-                if (i > obj->game_map_.max_y_) {
-                    obj->game_map_.max_y_ = i;
+                if (i > obj->gameMap.maxY) {
+                    obj->gameMap.maxY = i;
                 }
             }
         }
     }
-    obj->game_map_.max_x_ = (obj->game_map_.max_x_ + 1) * TILE_SIZE;
-    obj->game_map_.max_y_ = (obj->game_map_.max_y_ + 1) * TILE_SIZE;
+    obj->gameMap.maxX = (obj->gameMap.maxX + 1) * TILE_SIZE;
+    obj->gameMap.maxY = (obj->gameMap.maxY + 1) * TILE_SIZE;
 
-    obj->game_map_.start_x_ = 0;
-    obj->game_map_.start_y_ = 0;
+    obj->gameMap.startX = 0;
+    obj->gameMap.startY = 0;
 
-    obj->game_map_.file_name = name;
+    obj->gameMap.fileName = name;
     fclose(fp);
 }
 
@@ -76,7 +76,7 @@ void GameMap_LoadTiles(GameMap* obj, SDL_Renderer* screen) {
             continue;
         }
         fclose(fp);
-        obj->tile_mat[i].base_object.LoadImg(&obj->tile_mat[i].base_object,file_img, screen);
+        obj->tileMat[i].baseObject.LoadImg(&obj->tileMat[i].baseObject,file_img, screen);
     }
 }
 
@@ -90,21 +90,21 @@ void GameMap_DrawMap(GameMap* obj, SDL_Renderer* des) {
     int map_x = 0;
     int map_y = 0;
 
-    map_x = obj->game_map_.start_x_ / TILE_SIZE;
-    x1 = (obj->game_map_.start_x_ % TILE_SIZE) * -1;
+    map_x = obj->gameMap.startX / TILE_SIZE;
+    x1 = (obj->gameMap.startX % TILE_SIZE) * -1;
     x2 = x1 + SCREEN_WIDTH + (x1 == 0 ? 0 : TILE_SIZE);
 
-    map_y = obj->game_map_.start_y_ / TILE_SIZE;
-    y1 = (obj->game_map_.start_y_ % TILE_SIZE) * -1;
+    map_y = obj->gameMap.startY / TILE_SIZE;
+    y1 = (obj->gameMap.startY % TILE_SIZE) * -1;
     y2 = y1 + SCREEN_HEIGHT + (y1 == 0 ? 0 : TILE_SIZE);
 
     for (int i = y1; i < y2; i++, i += TILE_SIZE) {
-        map_x = obj->game_map_.start_x_ / TILE_SIZE;
+        map_x = obj->gameMap.startX / TILE_SIZE;
         for (int j = x1; j < x2; j += TILE_SIZE) {
-            int val = obj->game_map_.tile[map_y][map_x];
+            int val = obj->gameMap.tile[map_y][map_x];
             if (val > 0) {
-                obj->tile_mat[val].base_object.SetRect(&obj->tile_mat[val].base_object, j, i);
-                obj->tile_mat[val].base_object.Render(&obj->tile_mat[val].base_object, des, NULL);
+                obj->tileMat[val].baseObject.SetRect(&obj->tileMat[val].baseObject, j, i);
+                obj->tileMat[val].baseObject.Render(&obj->tileMat[val].baseObject, des, NULL);
             }
             map_x++;
         }

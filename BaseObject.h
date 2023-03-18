@@ -1,21 +1,21 @@
-#ifndef BASE_OBJECT_H_
-#define BASE_OBJECT_H_
+#ifndef baseObject_H_
+#define baseObject_H_
 
 #include "CommonFunction.h"
 
 typedef struct sBaseObject BaseObject;
 struct sBaseObject
 {
-	SDL_Texture* p_object_;
-	SDL_Rect rect_;
+	SDL_Texture* object; //core cua 1 object
+	SDL_Rect objectRect; //kich thuoc cua 1 object
 
-	void (*Destroy) (BaseObject*);
-	void (*SetRect) (BaseObject*, const int, const int);
-	SDL_Rect(*GetRect) (const BaseObject*);
-	SDL_Texture* (*GetObject) (const BaseObject*);
-	bool (*LoadImg) (BaseObject*, const char*, SDL_Renderer*);
-	void (*Render) (BaseObject*, SDL_Renderer*, const SDL_Rect*);
-	void (*Free) (BaseObject*);
+	void (*Destroy) (BaseObject*); //giai phong object
+	void (*SetRect) (BaseObject*, const int, const int); //set kich thuoc
+	SDL_Rect(*GetRect) (const BaseObject*); //get kich thuoc
+	SDL_Texture* (*GetObject) (const BaseObject*); //get object
+	bool (*LoadImg) (BaseObject*, const char*, SDL_Renderer*); //load hinh anh cho object
+	void (*Render) (BaseObject*, SDL_Renderer*, const SDL_Rect*); //render object len screen 
+	void (*Free) (BaseObject*); //giai phong
 };
 
 BaseObject BaseObject_Create();
@@ -27,4 +27,4 @@ bool BaseObject_LoadImg(BaseObject* obj, const char* path, SDL_Renderer* screen)
 void BaseObject_Render(BaseObject* obj, SDL_Renderer* des, const SDL_Rect* clip);
 void BaseObject_Free(BaseObject* obj);
 
-#endif // !BASE_OBJECT_H_
+#endif // !baseObject_H_

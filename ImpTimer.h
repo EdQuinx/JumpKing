@@ -5,33 +5,33 @@
 typedef struct sImpTimer ImpTimer;
 struct sImpTimer 
 {
-	int start_tick_;
-	int paused_tick_;
-	bool is_paused_;
-	bool is_started_;
+	int startTick;
+	int pauseTick;
+	bool isPaused;
+	bool isStarted;
 
-	void (*start)(ImpTimer*);
-	void (*stop)(ImpTimer*);
-	void (*paused)(ImpTimer*);
-	void (*unpaused)(ImpTimer*);
+	void (*Start)(ImpTimer*);
+	void (*Stop)(ImpTimer*);
+	void (*Paused)(ImpTimer*);
+	void (*UnPaused)(ImpTimer*);
 
-	int (*get_ticks)(ImpTimer*);
+	int (*GetTicks)(ImpTimer*);
 
-	bool (*is_started)(ImpTimer*);
-	bool (*is_paused)(ImpTimer*);
+	bool (*funcIsStarted)(ImpTimer*);
+	bool (*funcIsPaused)(ImpTimer*);
 
 };
 
 ImpTimer ImpTimer_Create();
 void ImpTimer_Destroy(ImpTimer* timer);
 
-void ImpTimer_start(ImpTimer* timer);
-void ImpTimer_stop(ImpTimer* timer);
-void ImpTimer_paused(ImpTimer* timer);
-void ImpTimer_unpaused(ImpTimer* timer);
-int ImpTimer_get_ticks(ImpTimer* timer);
+void ImpTimer_Start(ImpTimer* timer);
+void ImpTimer_Stop(ImpTimer* timer);
+void ImpTimer_Paused(ImpTimer* timer);
+void ImpTimer_UnPaused(ImpTimer* timer);
+int ImpTimer_GetTicks(ImpTimer* timer);
 
-bool ImpTimer_is_started(ImpTimer* timer);
-bool ImpTimer_is_paused(ImpTimer* timer);
+bool ImpTimer_funcIsStarted(ImpTimer* timer);
+bool ImpTimer_funcIsPaused(ImpTimer* timer);
 
 #endif

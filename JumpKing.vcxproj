@@ -145,16 +145,16 @@
     <ClCompile Include="main.c" />
     <ClCompile Include="CommonFunction.c" />
     <ClCompile Include="BaseObject.c" />
-    <ClCompile Include="MainObject.c" />
+    <ClCompile Include="PlayerObject.c" />
     <ClCompile Include="ImpTimer.c" />
-    <ClCompile Include="game_map.c" />
+    <ClCompile Include="GameMap.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonFunction.h" />
     <ClInclude Include="BaseObject.h" />
-    <ClInclude Include="game_map.h" />
+    <ClInclude Include="GameMap.h" />
     <ClInclude Include="ImpTimer.h" />
-    <ClInclude Include="MainObject.h" />
+    <ClInclude Include="PlayerObject.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

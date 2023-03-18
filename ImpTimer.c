@@ -3,20 +3,20 @@
 ImpTimer ImpTimer_Create() {
 	ImpTimer timer;
 
-	timer.start_tick_ = 0;
-	timer.paused_tick_ = 0;
-	timer.is_paused_ = false;
-	timer.is_started_ = false;
+	timer.startTick = 0;
+	timer.pauseTick = 0;
+	timer.isPaused = false;
+	timer.isStarted = false;
 
-	timer.start = ImpTimer_start;
-	timer.stop = ImpTimer_stop;
-	timer.paused = ImpTimer_paused;
-	timer.unpaused = ImpTimer_unpaused;
+	timer.Start = ImpTimer_Start;
+	timer.Stop = ImpTimer_Stop;
+	timer.Paused = ImpTimer_Paused;
+	timer.UnPaused = ImpTimer_UnPaused;
 
-	timer.get_ticks = ImpTimer_get_ticks;
+	timer.GetTicks = ImpTimer_GetTicks;
 
-	timer.is_started = ImpTimer_is_started;
-	timer.is_paused = ImpTimer_is_paused;
+	timer.funcIsStarted = ImpTimer_funcIsStarted;
+	timer.funcIsPaused = ImpTimer_funcIsPaused;
 
 	return timer;
 }
@@ -28,48 +28,48 @@ void ImpTimer_Destroy(ImpTimer* timer) {
 	}		
 }
 
-void ImpTimer_start(ImpTimer* timer) {
-	timer->is_started_ = 1;
-	timer->is_paused_ = 1;
-	timer->start_tick_ = SDL_GetTicks();
+void ImpTimer_Start(ImpTimer* timer) {
+	timer->isStarted = 1;
+	timer->isPaused = 1;
+	timer->startTick = SDL_GetTicks();
 }
 
-void ImpTimer_stop(ImpTimer* timer) {
-	timer->is_paused_ = 0;
-	timer->is_started_ = 0;
+void ImpTimer_Stop(ImpTimer* timer) {
+	timer->isPaused = 0;
+	timer->isStarted = 0;
 }
 
-void ImpTimer_paused(ImpTimer* timer) {
-	if (timer->is_started_ && !timer->is_paused_) {
-		timer->is_paused_ = 1;
-		timer->paused_tick_ = SDL_GetTicks() - timer->start_tick_;
+void ImpTimer_Paused(ImpTimer* timer) {
+	if (timer->isStarted && !timer->isPaused) {
+		timer->isPaused = 1;
+		timer->pauseTick = SDL_GetTicks() - timer->startTick;
 	}
 }
 
-void ImpTimer_unpaused(ImpTimer* timer) {
-	if (timer->is_paused_) {
-		timer->is_paused_ = 0;
-		timer->start_tick_ = SDL_GetTicks() - timer->paused_tick_;
-		timer->paused_tick_ = 0;
+void ImpTimer_UnPaused(ImpTimer* timer) {
+	if (timer->isPaused) {
+		timer->isPaused = 0;
+		timer->startTick = SDL_GetTicks() - timer->pauseTick;
+		timer->pauseTick = 0;
 	}
 }
 
-int ImpTimer_get_ticks(ImpTimer* timer) {
-	if (timer->is_started_) {
-		if (timer->is_paused_) {
-			return timer->paused_tick_;
+int ImpTimer_GetTicks(ImpTimer* timer) {
+	if (timer->isStarted) {
+		if (timer->isPaused) {
+			return timer->pauseTick;
 		}
 		else {
-			return SDL_GetTicks() - timer->start_tick_;
+			return SDL_GetTicks() - timer->startTick;
 		}
 	}
 	return 0;
 }
 
-bool ImpTimer_is_started(ImpTimer* timer) {
-	return timer->is_started_;
+bool ImpTimer_funcIsStarted(ImpTimer* timer) {
+	return timer->isStarted;
 }
 
-bool ImpTimer_is_paused(ImpTimer* timer) {
-	return timer->is_paused_;
+bool ImpTimer_funcIsPaused(ImpTimer* timer) {
+	return timer->isPaused;
 }

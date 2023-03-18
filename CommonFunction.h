@@ -35,22 +35,22 @@ const int RENDERER_DRAW_COLOR;
 #define STATE_MONEY 4
 
 typedef struct Input {
-	int left_;
-	int right_;
-	int up_;
-	int down_;
-	int jump_;
+	int left;
+	int right;
+	int up;
+	int down;
+	int jump;
 } Input;
 
 typedef struct Map {
-	int start_x_;
-	int start_y_;
+	int startX;
+	int startY;
 
-	int max_x_;
-	int max_y_;
+	int maxX;
+	int maxY;
 
 	int tile[MAX_MAP_Y][MAX_MAP_X];
-	char* file_name;
+	char* fileName;
 } Map;
 
 #endif // !COMMON_FUNCTION_H_

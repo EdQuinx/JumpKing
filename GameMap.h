@@ -10,14 +10,14 @@
 typedef struct sTileMat TileMat;
 struct sTileMat
 {
-    BaseObject base_object;
+    BaseObject baseObject;
 };
 
 typedef struct sGameMap GameMap;
 struct sGameMap
 {
-    Map game_map_;
-    TileMat tile_mat[MAX_TILES];
+    Map gameMap;
+    TileMat tileMat[MAX_TILES];
 
     void (*LoadMap) (GameMap*, char*);
     void (*LoadTiles) (GameMap*, SDL_Renderer*);

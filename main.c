@@ -1,7 +1,7 @@
 ﻿#include "CommonFunction.h"
 #include "BaseObject.h"
-#include "game_map.h"
-#include "MainObject.h"
+#include "GameMap.h"
+#include "PlayerObject.h"
 #include "ImpTimer.h"
 #include "Camera.h"
 
@@ -67,25 +67,25 @@ void close()
 #undef main
 int main(int argc, char* argv[]) {
 
-    ImpTimer fps_timer = ImpTimer_Create();
+    ImpTimer fpsTimer = ImpTimer_Create();
     g_background = BaseObject_Create();
 
     if (!InitData()) return -1;
     if (!LoadBackground(&g_background)) return -1;
 
-    GameMap game_map = GameMap_Create();
+    GameMap gameMap = GameMap_Create();
     char map[] = "map/map01.dat";
-    game_map.LoadMap(&game_map, map);
-    game_map.LoadTiles(&game_map, g_screen);
+    gameMap.LoadMap(&gameMap, map);
+    gameMap.LoadTiles(&gameMap, g_screen);
 
-    MainObject p_player = MainObject_Create();
-    p_player.LoadImg(&p_player, "img/player sprite/player_right.png", g_screen);
-    p_player.set_clips(&p_player);
+    PlayerObject player = PlayerObject_Create();
+    player.LoadImg(&player, "img/player sprite/player_right.png", g_screen);
+    player.set_clips(&player);
 
     bool is_quit = false;
     while (!is_quit)
     {
-        fps_timer.start(&fps_timer);
+        fpsTimer.Start(&fpsTimer);
         while (SDL_PollEvent(&g_event) != 0)
         {
             if (g_event.type == SDL_QUIT)
@@ -93,7 +93,7 @@ int main(int argc, char* argv[]) {
                 is_quit = true;
             }
 
-            p_player.HandleInputAction(&p_player, g_event, g_screen);
+            player.HandleInputAction(&player, g_event, g_screen);
         }
 
         //SDL_SetRenderDrawColor(g_screen, RENDERER_DRAW_COLOR, RENDERER_DRAW_COLOR, RENDERER_DRAW_COLOR, RENDERER_DRAW_COLOR);
@@ -101,19 +101,19 @@ int main(int argc, char* argv[]) {
 
         g_background.Render(&g_background, g_screen, NULL);
 
-        Map map_data = game_map.GetMap(&game_map);
+        Map map_data = gameMap.GetMap(&gameMap);
 
-        p_player.SetMapXY(&p_player, map_data.start_x_, map_data.start_y_);
-        p_player.DoPlayer(&p_player, &map_data);
-        p_player.Show(&p_player, g_screen);
+        player.SetMapXY(&player, map_data.startX, map_data.startY);
+        player.DoPlayer(&player, &map_data);
+        player.Render(&player, g_screen);
 
-        game_map.SetMap(&game_map, &map_data);
-        game_map.DrawMap(&game_map, g_screen);
+        gameMap.SetMap(&gameMap, &map_data);
+        gameMap.DrawMap(&gameMap, g_screen);
 
         SDL_RenderPresent(g_screen);
 
 
-        int real_imp_time = fps_timer.get_ticks(&fps_timer);
+        int real_imp_time = fpsTimer.GetTicks(&fpsTimer);
         int time_one_frame = 1000 / FRAME_PER_SECOND;
 
         if (real_imp_time < time_one_frame) {

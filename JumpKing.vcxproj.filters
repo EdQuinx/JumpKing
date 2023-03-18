@@ -24,13 +24,13 @@
     <ClCompile Include="BaseObject.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MainObject.c">
+    <ClCompile Include="PlayerObject.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ImpTimer.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="game_map.c">
+    <ClCompile Include="GameMap.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -41,13 +41,13 @@
     <ClInclude Include="BaseObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MainObject.h">
+    <ClInclude Include="PlayerObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ImpTimer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="game_map.h">
+    <ClInclude Include="GameMap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

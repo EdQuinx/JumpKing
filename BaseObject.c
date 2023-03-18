@@ -1,13 +1,14 @@
 #include "BaseObject.h"
 
+//init 
 BaseObject BaseObject_Create()
 {
 	BaseObject obj;
-	obj.p_object_ = NULL;
-	obj.rect_.x = 0;
-	obj.rect_.y = 0;
-	obj.rect_.w = 0;
-	obj.rect_.h = 0;
+	obj.object = NULL;
+	obj.objectRect.x = 0;
+	obj.objectRect.y = 0;
+	obj.objectRect.w = 0;
+	obj.objectRect.h = 0;
 	obj.Destroy = BaseObject_Destroy;
 	obj.SetRect = BaseObject_SetRect;
 	obj.GetRect = BaseObject_GetRect;
@@ -29,54 +30,59 @@ void BaseObject_Destroy(BaseObject* obj)
 
 void BaseObject_SetRect(BaseObject* obj, const int x, const int y)
 {
-	obj->rect_.x = x;
-	obj->rect_.y = y;
+	obj->objectRect.x = x;
+	obj->objectRect.y = y;
 }
 
 SDL_Rect BaseObject_GetRect(const BaseObject* obj)
 {
-	return obj->rect_;
+	return obj->objectRect;
 }
 
 SDL_Texture* BaseObject_GetObject(const BaseObject* obj)
 {
-	return obj->p_object_;
+	return obj->object;
 }
 
 bool BaseObject_LoadImg(BaseObject* obj, const char* path, SDL_Renderer* screen)
 {
 	BaseObject_Free(obj);
-	SDL_Texture* new_texture = NULL;
+	SDL_Texture* newTexture = NULL;
 
-	SDL_Surface* load_surface = IMG_Load(path);
-	if (load_surface != NULL)
+	SDL_Surface* loadSurface = IMG_Load(path);
+	if (loadSurface != NULL)
 	{
-		SDL_SetColorKey(load_surface, SDL_TRUE, SDL_MapRGB(load_surface->format, COLOR_KEY_R, COLOR_KEY_G, COLOR_KEY_B));
-		new_texture = SDL_CreateTextureFromSurface(screen, load_surface);
-		if (new_texture != NULL)
+		SDL_SetColorKey(loadSurface, SDL_TRUE, SDL_MapRGB(loadSurface->format, COLOR_KEY_R, COLOR_KEY_G, COLOR_KEY_B));
+		newTexture = SDL_CreateTextureFromSurface(screen, loadSurface);
+		if (newTexture != NULL)
 		{
-			obj->rect_.w = load_surface->w;
-			obj->rect_.h = load_surface->h;
+			obj->objectRect.w = loadSurface->w;
+			obj->objectRect.h = loadSurface->h;
 		}
 
-		SDL_FreeSurface(load_surface);
+		SDL_FreeSurface(loadSurface);
 	}
-	obj->p_object_ = new_texture;
+	obj->object = newTexture;
 
-	return obj->p_object_ != NULL;
+	return obj->object != NULL;
 }
 
 void BaseObject_Render(BaseObject* obj, SDL_Renderer* des, const SDL_Rect* clip)
 {
-	SDL_Rect renderquad = { obj->rect_.x, obj->rect_.y, obj->rect_.w, obj->rect_.h };
-	SDL_RenderCopy(des, obj->p_object_, clip, &renderquad);
+	SDL_Rect quadRect = { 
+		obj->objectRect.x, 
+		obj->objectRect.y, 
+		obj->objectRect.w, 
+		obj->objectRect.h 
+	};
+	SDL_RenderCopy(des, obj->object, clip, &quadRect);
 }
 
 void BaseObject_Free(BaseObject* obj) {
-    if (obj->p_object_ != NULL) {
-        //SDL_DestroyTexture(obj->p_object_);
-        obj->p_object_ = NULL;
-        obj->rect_.h = 0;
-        obj->rect_.w = 0;
+    if (obj->object != NULL) {
+        //SDL_DestroyTexture(obj->object);
+        obj->object = NULL;
+        obj->objectRect.h = 0;
+        obj->objectRect.w = 0;
     }
 }
